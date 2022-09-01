@@ -1,6 +1,6 @@
-package com.elisarovani.helpdek.domain;
+package com.elisarovani.helpdesk.domain;
 
-import com.elisarovani.helpdek.domain.enums.Profile;
+import com.elisarovani.helpdesk.domain.enums.Profile;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
@@ -12,36 +12,42 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity
-
 public abstract class Person implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Integer id;
-    protected String name;
+
     @Column(unique = true)
+    protected String name;
     protected String email;
     protected String password;
-
-    @ElementCollection (fetch = FetchType.EAGER)
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "PROFILES")
     protected Set<Integer> profiles = new HashSet<>();
 
     @JsonFormat(pattern = "yyyy/MM/dd")
     protected LocalDate dateCreated = LocalDate.now();
 
-    public Person(){
+    public Person() {
         super();
-        addProfiles(Profile.CLIENT);
+        addProfile(Profile.CLIENT);
+    }
+
+    void addProfile(Profile profile) {
+        this.profiles.add(profile.getCode());
     }
 
     public Person(Integer id, String name, String email, String password) {
+        super();
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
-        addProfiles(Profile.CLIENT);
+        addProfile(Profile.CLIENT);
+
+
     }
 
     public Integer getId() {
@@ -80,24 +86,12 @@ public abstract class Person implements Serializable {
         return profiles.stream().map(x -> Profile.toEnum(x)).collect(Collectors.toSet());
     }
 
-    public void addProfiles(Profile profile) {
-        this.profiles.add(profile.getCode());
-    }
-
-    public LocalDate getDateCreated() {
-        return dateCreated;
-    }
-
-    public void setDateCreated(LocalDate dateCreated) {
-        this.dateCreated = dateCreated;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Person person = (Person) o;
-        return id.equals(person.id);
+        return Objects.equals(id, person.id);
     }
 
     @Override

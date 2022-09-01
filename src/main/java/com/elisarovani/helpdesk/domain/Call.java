@@ -1,12 +1,14 @@
-package com.elisarovani.helpdek.domain;
+package com.elisarovani.helpdesk.domain;
 
-import com.elisarovani.helpdek.domain.enums.Priority;
-import com.elisarovani.helpdek.domain.enums.Status;
+import com.elisarovani.helpdesk.domain.enums.Priority;
+import com.elisarovani.helpdesk.domain.enums.Status;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity

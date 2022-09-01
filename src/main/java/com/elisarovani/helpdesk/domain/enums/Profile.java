@@ -1,13 +1,13 @@
-package com.elisarovani.helpdek.domain.enums;
+package com.elisarovani.helpdesk.domain.enums;
 
-public enum Status {
+public enum Profile {
 
-    OPEN(0, "OPEN"), ONGOING (1, "ONGOING"), CLOSED (2, "CLOSED");
+    ADMIN(0, "ROLE_ADMIN"), CLIENT (1, "ROLE_CLIENT"), TECHNICIAN (2, "ROLE_TECHNICIAN");
 
     private Integer code;
     private String description;
 
-    Status(Integer code, String description) {
+    Profile(Integer code, String description) {
         this.code = code;
         this.description = description;
     }
@@ -20,16 +20,16 @@ public enum Status {
         return description;
     }
 
-    public static Status toEnum (Integer cod){
+    public static Profile toEnum (Integer cod){
         if (cod == null){
             return null;
         }
-        for(Status x : Status.values()){
+        for(Profile x : Profile.values()){
             if(cod.equals(x.getCode())){
                 return x;
             }
         }
-        throw new IllegalArgumentException("Invalid status");
+        throw new IllegalArgumentException("Invalid profile");
     }
 
 }

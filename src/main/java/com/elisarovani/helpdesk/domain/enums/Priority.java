@@ -1,4 +1,4 @@
-package com.elisarovani.helpdek.domain.enums;
+package com.elisarovani.helpdesk.domain.enums;
 
 public enum Priority {
 
