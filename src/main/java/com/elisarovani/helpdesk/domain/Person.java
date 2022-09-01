@@ -35,7 +35,7 @@ public abstract class Person implements Serializable {
         addProfile(Profile.CLIENT);
     }
 
-    void addProfile(Profile profile) {
+    public void addProfile(Profile profile) {
         this.profiles.add(profile.getCode());
     }
 
