@@ -2,6 +2,7 @@ package com.elisarovani.helpdesk.resources;
 
 
 import com.elisarovani.helpdesk.domain.Technician;
+import com.elisarovani.helpdesk.domain.dtos.TechnicianDTO;
 import com.elisarovani.helpdesk.services.TechnicianService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +18,9 @@ public class TechnicianResources {
     @Autowired
     private TechnicianService service;
     @GetMapping(value = "/{id}")
-   public ResponseEntity<Technician> findById(@PathVariable Integer id){
+   public ResponseEntity<TechnicianDTO> findById(@PathVariable Integer id){
         Technician obj = this.service.findById(id);
-        return ResponseEntity.ok().body(obj);
+        return ResponseEntity.ok().body(new TechnicianDTO(obj));
    }
 
 }

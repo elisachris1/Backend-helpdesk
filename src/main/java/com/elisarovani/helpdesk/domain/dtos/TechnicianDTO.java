@@ -1,53 +1,44 @@
-package com.elisarovani.helpdesk.domain;
+package com.elisarovani.helpdesk.domain.dtos;
 
+import com.elisarovani.helpdesk.domain.Technician;
 import com.elisarovani.helpdesk.domain.enums.Profile;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Entity
-public abstract class Person implements Serializable {
+public class TechnicianDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Integer id;
-
-    @Column(unique = true)
+    @NotNull(message = "Name is required")
     protected String name;
+    @NotNull(message = "Email is required")
     protected String email;
+    @NotNull(message = "Password is required")
     protected String password;
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "PROFILES")
     protected Set<Integer> profiles = new HashSet<>();
 
     @JsonFormat(pattern = "yyyy/MM/dd")
     protected LocalDate dateCreated = LocalDate.now();
 
-    public Person() {
+    public TechnicianDTO(){
+
         super();
-        addProfile(Profile.CLIENT);
+        addProfile(Profile.TECHNICIAN);
     }
-
-    public void addProfile(Profile profile) {
-        this.profiles.add(profile.getCode());
-    }
-
-    public Person(Integer id, String name, String email, String password) {
+    public TechnicianDTO(Technician obj) {
         super();
-        this.id = id;
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        addProfile(Profile.CLIENT);
-
-
+        this.id = obj.getId();
+        this.name = obj.getName();
+        this.email = obj.getEmail();
+        this.password = obj.getPassword();
+        this.profiles = obj.getProfiles().stream().map(x -> x.getCode()).collect(Collectors.toSet());
+        this.dateCreated = obj.getDateCreated();
     }
 
     public Integer getId() {
@@ -86,17 +77,8 @@ public abstract class Person implements Serializable {
         return profiles.stream().map(x -> Profile.toEnum(x)).collect(Collectors.toSet());
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Person person = (Person) o;
-        return Objects.equals(id, person.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
+    public void addProfile(Profile profile) {
+        this.profiles.add(profile.getCode());
     }
 
     public LocalDate getDateCreated() {
