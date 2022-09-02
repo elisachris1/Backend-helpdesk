@@ -44,5 +44,7 @@ public class TechnicianService {
         throw new DataIntegrityViolationException("Email already registered in the system!");
         }
     obj = personRepository.findByEmail(objDTO.getEmail());
+
+
     }
 }
