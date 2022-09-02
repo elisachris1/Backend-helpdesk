@@ -6,6 +6,7 @@ import com.elisarovani.helpdesk.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -19,4 +20,7 @@ public class TechnicianService {
         return obj.orElseThrow(() -> new ObjectNotFoundException("Object not found! Id: " + id));
     }
 
+    public List<Technician> findAll() {
+        return repository.findAll();
+    }
 }
