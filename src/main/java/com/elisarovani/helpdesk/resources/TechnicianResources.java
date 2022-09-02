@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -36,5 +37,11 @@ public class TechnicianResources {
     Technician newObj = service.create(objDTO);
        URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{id}").buildAndExpand(newObj.getId()).toUri();
     return ResponseEntity.created(null).build();
+   }
+
+   @PutMapping(value="/{id}")
+   public ResponseEntity<TechnicianDTO> update(@PathVariable Integer id, @Valid @RequestBody TechnicianDTO objDTO){
+    Technician obj = service.update(id, objDTO);
+    return ResponseEntity.ok().body(new TechnicianDTO(obj));
    }
 }

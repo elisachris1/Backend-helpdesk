@@ -38,6 +38,14 @@ public class TechnicianService {
     return repository.save(newObj);
     }
 
+    public Technician update(Integer id, TechnicianDTO objDTO) {
+        objDTO.setId(id);
+        Technician oldObj = findById(id);
+        validateByEmail(objDTO);
+        oldObj = new Technician(objDTO);
+        return repository.save(oldObj);
+    }
+
     private void validateByEmail(TechnicianDTO objDTO) {
      Optional<Person> obj = personRepository.findByEmail(objDTO.getEmail());
      if(obj.isPresent() && obj.get().getId()!= objDTO.getId()){
@@ -47,4 +55,6 @@ public class TechnicianService {
 
 
     }
+
+
 }
