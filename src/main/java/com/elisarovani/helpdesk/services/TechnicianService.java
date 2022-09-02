@@ -46,6 +46,15 @@ public class TechnicianService {
         return repository.save(oldObj);
     }
 
+    public void delete(Integer id) {
+        Technician obj = findById(id);
+        if(obj.getCalls().size() > 0){
+            throw new DataIntegrityViolationException("Technician has calls and cannot be deleted!");
+        }
+            repository.deleteById(id);
+
+    }
+
     private void validateByEmail(TechnicianDTO objDTO) {
      Optional<Person> obj = personRepository.findByEmail(objDTO.getEmail());
      if(obj.isPresent() && obj.get().getId()!= objDTO.getId()){
@@ -55,6 +64,7 @@ public class TechnicianService {
 
 
     }
+
 
 
 }
