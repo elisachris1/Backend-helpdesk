@@ -19,7 +19,7 @@ import java.util.Optional;
 
 @CrossOrigin("http://localhost:4200/calls")
 @Service
-public class CallServices {
+public class CallService {
 
     @Autowired
     private CallRepository repository;

@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/calls")
-public class CallResources {
+public class CallResource {
 
     @Autowired
     private CallService service;
