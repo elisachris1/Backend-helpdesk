@@ -29,7 +29,7 @@ public class TechnicianDTO implements Serializable {
     public TechnicianDTO(){
 
         super();
-        addProfile(Profile.TECHNICIAN);
+        addProfile(Profile.CLIENT);
     }
     public TechnicianDTO(Technician obj) {
         super();

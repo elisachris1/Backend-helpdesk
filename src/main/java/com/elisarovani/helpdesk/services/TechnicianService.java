@@ -1,6 +1,7 @@
 package com.elisarovani.helpdesk.services;
 
 import com.elisarovani.helpdesk.domain.Technician;
+import com.elisarovani.helpdesk.domain.dtos.TechnicianDTO;
 import com.elisarovani.helpdesk.repositories.TechnicianRepository;
 import com.elisarovani.helpdesk.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,5 +23,11 @@ public class TechnicianService {
 
     public List<Technician> findAll() {
         return repository.findAll();
+    }
+
+    public Technician create(TechnicianDTO objDTO) {
+        objDTO.setId(null);
+    Technician newObj = new Technician(objDTO);
+    return repository.save(newObj);
     }
 }
